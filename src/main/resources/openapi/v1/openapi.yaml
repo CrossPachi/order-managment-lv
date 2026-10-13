@@ -1,0 +1,30 @@
+openapi: 3.1.0
+info:
+  title: Orders API
+  version: 1.0.0
+  description: |
+    Search orders by order reference (`orderRef`), order status (`orderStatus`),
+    store name (`storeName`), or product name (`displayName`) from the order's
+    items. Matching is case- and accent-insensitive, ignores punctuation such
+    as commas, and allows minor spelling errors when searching store and
+    product names. An empty search or a search with no matches returns an
+    empty list.
+  contact:
+    name: Support team
+servers:
+  - url: /
+    description: Current server
+tags:
+  - name: Orders
+    description: Search orders and their items.
+paths:
+  /api/v1/orders/search:
+    $ref: ./paths/orders.yaml
+components:
+  schemas:
+    Order:
+      $ref: ./schemas/order.yaml
+    Item:
+      $ref: ./schemas/item.yaml
+    ApiError:
+      $ref: ./schemas/api-error.yaml

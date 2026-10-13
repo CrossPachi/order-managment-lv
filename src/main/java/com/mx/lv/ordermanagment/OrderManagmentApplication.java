@@ -1,13 +1,13 @@
-package com.mx.lv.ordermanagmentlv;
+package com.mx.lv.ordermanagment;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrderManagmentLvApplication {
+public class OrderManagmentApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OrderManagmentLvApplication.class, args);
+		SpringApplication.run(OrderManagmentApplication.class, args);
 	}
 
 }

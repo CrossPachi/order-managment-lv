@@ -1,0 +1,35 @@
+type: object
+description: An order and the items included in it.
+required:
+  - orderRef
+  - userId
+  - channel
+  - orderStatus
+  - storeName
+  - items
+properties:
+  orderRef:
+    type: string
+    description: Order reference. This field can be searched.
+    example: ORD-2026-1042
+  userId:
+    type: string
+    description: Identifier of the person who placed the order.
+    example: USR-5821
+  channel:
+    type: string
+    description: Channel through which the order was placed.
+    example: WEB
+  orderStatus:
+    type: string
+    description: Current order status. This field can be searched.
+    example: EN PROCESO
+  storeName:
+    type: string
+    description: Store associated with the order. This field can be searched.
+    example: Liverpool Centro
+  items:
+    type: array
+    description: Items returned for the order. Their `displayName` values can be searched.
+    items:
+      $ref: ./item.yaml

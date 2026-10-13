@@ -1,0 +1,29 @@
+type: object
+description: An item included in an order.
+required:
+  - itemId
+  - skuId
+  - quantity
+  - displayName
+  - deliveryStatus
+properties:
+  itemId:
+    type: string
+    description: Identifier of the item in the order.
+    example: ITEM-781
+  skuId:
+    type: string
+    description: Product code in the catalog.
+    example: SKU-2049
+  quantity:
+    type: integer
+    description: Number of units ordered.
+    example: 1
+  displayName:
+    type: string
+    description: Product name shown to the customer. This field can be searched.
+    example: Audífonos inalámbricos
+  deliveryStatus:
+    type: string
+    description: Current delivery status of the item.
+    example: ENVIADO

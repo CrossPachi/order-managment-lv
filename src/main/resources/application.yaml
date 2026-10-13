@@ -1,3 +1,7 @@
 spring:
   application:
     name: order-managment-lv
+
+clients:
+  mock-api:
+    base-url: ${MOCK_API_BASE_URL}
