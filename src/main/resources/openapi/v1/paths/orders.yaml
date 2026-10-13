@@ -1,0 +1,74 @@
+get:
+  tags:
+    - Orders
+  summary: Search orders
+  description: |
+    Search orders by entering a word or phrase in `text`. The search checks
+    the order's `orderRef`, `orderStatus`, and `storeName`, and the
+    `displayName` of each item returned for that order.
+
+    Matching ignores letter case, accents, and punctuation such as commas.
+    Store and product names also allow a minor spelling mistake (up to one
+    character difference in a word). The search supports partial text, so it
+    can be used as the user types. For example, searching for `audifonos
+    inalambricos` can find an item named `Audífonos inalámbricos`.
+
+    Example request:
+
+    ```bash
+    curl --get 'http://localhost:8080/api/v1/orders/search' \
+      --data-urlencode 'text=audifonos inalambricos'
+    ```
+
+    Example response values are illustrative.
+  operationId: searchOrders
+  parameters:
+    - name: text
+      in: query
+      required: true
+      description: Word or phrase to search for as the user types.
+      schema:
+        type: string
+      example: audifonos inalambricos
+  responses:
+    '200':
+      description: Search completed. The list is empty when there are no matches or the search text is blank.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../openapi.yaml#/components/schemas/Order
+          examples:
+            matchingOrder:
+              summary: An order with a matching item name
+              value:
+                - orderRef: ORD-2026-1042
+                  userId: USR-5821
+                  channel: WEB
+                  orderStatus: EN PROCESO
+                  storeName: Liverpool Centro
+                  items:
+                    - itemId: ITEM-781
+                      skuId: SKU-2049
+                      quantity: 1
+                      displayName: Audífonos inalámbricos
+                      deliveryStatus: ENVIADO
+            noMatches:
+              summary: No matching orders
+              value: []
+    '400':
+      description: Bad request. The required `text` query parameter is missing.
+    '502':
+      description: Bad gateway. The order or item service could not be reached, or returned an empty response.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 502
+            error: Bad Gateway
+            message: Unable to load orders from external services
+            timestamp: '2026-10-12T22:30:00Z'
+    '500':
+      description: Internal server error. An unexpected problem occurred while searching orders.

@@ -1,0 +1,25 @@
+type: object
+description: Details about why the request could not be completed.
+required:
+  - status
+  - error
+  - message
+  - timestamp
+properties:
+  status:
+    type: integer
+    description: HTTP status code.
+    example: 502
+  error:
+    type: string
+    description: Short error name.
+    example: Bad Gateway
+  message:
+    type: string
+    description: Explanation of the problem.
+    example: Unable to load orders from external services
+  timestamp:
+    type: string
+    format: date-time
+    description: Time when the error occurred.
+    example: '2026-10-12T18:30:00Z'
