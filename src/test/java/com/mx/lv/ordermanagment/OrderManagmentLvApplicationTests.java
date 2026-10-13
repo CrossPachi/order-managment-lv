@@ -1,4 +1,4 @@
-package com.mx.lv.ordermanagmentlv;
+package com.mx.lv.ordermanagment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
