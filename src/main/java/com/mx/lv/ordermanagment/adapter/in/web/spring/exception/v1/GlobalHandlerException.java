@@ -1,7 +1,5 @@
 package com.mx.lv.ordermanagment.adapter.in.web.spring.exception.v1;
 
-package com.mx.lv.ordermanagment.adapter.in.web.spring.exception.v1;
-
 import com.mx.lv.ordermanagment.adapter.in.web.spring.response.v1.ApiErrorResponse;
 import com.mx.lv.ordermanagment.application.exception.OrdersUnavailableException;
 import org.springframework.http.HttpStatus;

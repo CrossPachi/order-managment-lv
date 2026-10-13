@@ -1,0 +1,3 @@
+clients:
+  mock-api:
+    base-url: https://6994a4eab081bc23e9c0f61e.mockapi.io/api/v1
