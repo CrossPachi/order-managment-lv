@@ -1,17 +1,17 @@
 get:
   tags:
     - Orders
-  summary: Search orders
+  summary: Order Search Service
   description: |
-    Search orders by entering a word or phrase in `text`. The search checks
-    the order's `orderRef`, `orderStatus`, and `storeName`, and the
-    `displayName` of each item returned for that order.
+    Searches orders by reference, status, store name, or item name using
+    flexible text matching.
 
-    Matching ignores letter case, accents, and punctuation such as commas.
-    Store and product names also allow a minor spelling mistake (up to one
-    character difference in a word). The search supports partial text, so it
-    can be used as the user types. For example, searching for `audifonos
-    inalambricos` can find an item named `Audífonos inalámbricos`.
+    Enter a word or phrase in `text`. Matching ignores letter case, accents,
+    and punctuation such as commas. Store and product names also allow a minor
+    spelling mistake (up to one character difference in a word). The search
+    supports partial text, so it can be used as the user types. For example,
+    searching for `audifonos inalambricos` can find an item named
+    `Audífonos inalámbricos`.
 
     Example request:
 
@@ -38,22 +38,19 @@ get:
           schema:
             type: array
             items:
-              $ref: ../openapi.yaml#/components/schemas/Order
+              $ref: ../openapi.yaml#/components/schemas/OrderSearchResponse
           examples:
             matchingOrder:
               summary: An order with a matching item name
               value:
                 - orderRef: ORD-2026-1042
-                  userId: USR-5821
                   channel: WEB
                   orderStatus: EN PROCESO
                   storeName: Liverpool Centro
                   items:
                     - itemId: ITEM-781
-                      skuId: SKU-2049
                       quantity: 1
                       displayName: Audífonos inalámbricos
-                      deliveryStatus: ENVIADO
             noMatches:
               summary: No matching orders
               value: []

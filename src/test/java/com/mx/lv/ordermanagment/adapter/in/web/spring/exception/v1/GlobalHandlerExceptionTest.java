@@ -1,6 +1,9 @@
 package com.mx.lv.ordermanagment.adapter.in.web.spring.exception.v1;
 
-import com.mx.lv.ordermanagment.adapter.in.web.spring.response.v1.ApiErrorResponse;
+
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.exception.GlobalHandlerException;
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.ApiErrorResponse;
+import com.mx.lv.ordermanagment.application.exception.OrderNotFoundException;
 import com.mx.lv.ordermanagment.application.exception.OrdersUnavailableException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,21 @@ class GlobalHandlerExceptionTest {
         assertEquals(HttpStatus.BAD_GATEWAY.value(), response.getBody().status());
         assertEquals(HttpStatus.BAD_GATEWAY.getReasonPhrase(), response.getBody().error());
         assertEquals("orders are unavailable", response.getBody().message());
+        assertNotNull(response.getBody().timestamp());
+    }
+
+    @Test
+    void tellsTheCallerWhenAnOrderCouldNotBeFound() {
+        GlobalHandlerException handler = new GlobalHandlerException();
+
+        ResponseEntity<ApiErrorResponse> response =
+                handler.handleOrderNotFound(new OrderNotFoundException("ORD-MISSING"));
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getBody().status());
+        assertEquals(HttpStatus.NOT_FOUND.getReasonPhrase(), response.getBody().error());
+        assertEquals("Order not found: ORD-MISSING", response.getBody().message());
         assertNotNull(response.getBody().timestamp());
     }
 }

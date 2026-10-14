@@ -1,8 +1,10 @@
 package com.mx.lv.ordermanagment.configuration.spring;
 
 import com.mx.lv.ordermanagment.adapter.out.http.MockApiOrdersAdapter;
+import com.mx.lv.ordermanagment.application.port.in.GetOrderByReferenceUseCase;
 import com.mx.lv.ordermanagment.application.port.in.SearchOrdersUseCase;
 import com.mx.lv.ordermanagment.application.port.out.LoadOrdersPort;
+import com.mx.lv.ordermanagment.application.usecase.GetOrdersByReferenceService;
 import com.mx.lv.ordermanagment.application.usecase.SearchOrdersService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +19,12 @@ public class OrderSearchConfiguration {
     }
 
     @Bean
-    public SearchOrdersUseCase searchOrdersUseCase(
-            LoadOrdersPort loadOrdersPort
-    ) {
+    public SearchOrdersUseCase searchOrdersUseCase(LoadOrdersPort loadOrdersPort) {
         return new SearchOrdersService(loadOrdersPort);
+    }
+
+    @Bean
+    public GetOrderByReferenceUseCase getOrdersByReferenceUseCase(LoadOrdersPort loadOrdersPort) {
+        return new GetOrdersByReferenceService(loadOrdersPort);
     }
 }

@@ -1,6 +1,8 @@
-package com.mx.lv.ordermanagment.adapter.in.web.spring.exception.v1;
+package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.exception;
 
-import com.mx.lv.ordermanagment.adapter.in.web.spring.response.v1.ApiErrorResponse;
+
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.ApiErrorResponse;
+import com.mx.lv.ordermanagment.application.exception.OrderNotFoundException;
 import com.mx.lv.ordermanagment.application.exception.OrdersUnavailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,19 @@ public class GlobalHandlerException {
 
     @ExceptionHandler(OrdersUnavailableException.class)
     public ResponseEntity<ApiErrorResponse> handleOrdersUnavailable(OrdersUnavailableException exception) {
-        HttpStatus status = HttpStatus.BAD_GATEWAY;
+        return buildApiErrorResponse(HttpStatus.BAD_GATEWAY, exception.getMessage());
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleOrderNotFound(OrderNotFoundException exception) {
+        return buildApiErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    private ResponseEntity<ApiErrorResponse> buildApiErrorResponse(HttpStatus status, String message) {
         ApiErrorResponse response = new ApiErrorResponse(
                 status.value(),
                 status.getReasonPhrase(),
-                exception.getMessage(),
+                message,
                 Instant.now()
         );
         return ResponseEntity.status(status).body(response);

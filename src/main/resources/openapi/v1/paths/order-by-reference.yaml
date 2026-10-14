@@ -1,0 +1,63 @@
+get:
+  tags:
+    - Orders
+  summary: Order Query Service
+  description: |
+    Retrieves a specific order by its reference, including its associated item
+    details. The response includes the order reference, channel, status, and
+    each item's identifier and quantity.
+
+    Example request:
+
+    ```bash
+    curl 'http://localhost:8080/api/v1/orders/ORD-2026-1042'
+    ```
+
+    Example response values are illustrative.
+  operationId: getOrderByReference
+  parameters:
+    - name: orderRef
+      in: path
+      required: true
+      description: Reference of the order to retrieve.
+      schema:
+        type: string
+      example: ORD-2026-1042
+  responses:
+    '200':
+      description: The order was found.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/OrderResponse
+          example:
+            orderRef: ORD-2026-1042
+            channel: WEB
+            orderStatus: EN PROCESO
+            items:
+              - itemId: ITEM-781
+                quantity: 1
+    '404':
+      description: No order was found with the given reference.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 404
+            error: Not Found
+            message: 'Order not found: ORD-2026-1042'
+            timestamp: '2026-10-13T18:00:00Z'
+    '502':
+      description: The order or item service could not be reached, or returned an empty response.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 502
+            error: Bad Gateway
+            message: Unable to load orders from external services
+            timestamp: '2026-10-13T18:00:00Z'
+    '500':
+      description: An unexpected problem occurred while retrieving the order.

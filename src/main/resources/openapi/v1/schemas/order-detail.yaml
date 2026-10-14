@@ -1,0 +1,25 @@
+type: object
+description: Order returned by the get-by-reference endpoint.
+required:
+  - orderRef
+  - channel
+  - orderStatus
+  - items
+properties:
+  orderRef:
+    type: string
+    description: Reference of the order.
+    example: ORD-2026-1042
+  channel:
+    type: string
+    description: Channel through which the order was placed.
+    example: WEB
+  orderStatus:
+    type: string
+    description: Current status of the order.
+    example: EN PROCESO
+  items:
+    type: array
+    description: Items in the order, with their identifiers and quantities.
+    items:
+      $ref: ./order-detail-item.yaml
