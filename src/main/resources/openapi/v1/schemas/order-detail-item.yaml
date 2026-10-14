@@ -1,0 +1,14 @@
+type: object
+description: Item fields returned when retrieving an order by reference.
+required:
+  - itemId
+  - quantity
+properties:
+  itemId:
+    type: string
+    description: Identifier of the item in the order.
+    example: ITEM-781
+  quantity:
+    type: integer
+    description: Number of units ordered.
+    example: 1

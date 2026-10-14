@@ -1,8 +1,7 @@
 type: object
-description: An order and the items included in it.
+description: Order summary returned by the search endpoint.
 required:
   - orderRef
-  - userId
   - channel
   - orderStatus
   - storeName
@@ -10,12 +9,8 @@ required:
 properties:
   orderRef:
     type: string
-    description: Order reference. This field can be searched.
+    description: Order reference.
     example: ORD-2026-1042
-  userId:
-    type: string
-    description: Identifier of the person who placed the order.
-    example: USR-5821
   channel:
     type: string
     description: Channel through which the order was placed.
@@ -30,6 +25,6 @@ properties:
     example: Liverpool Centro
   items:
     type: array
-    description: Items returned for the order. Their `displayName` values can be searched.
+    description: Items returned with the search result.
     items:
       $ref: ./item.yaml

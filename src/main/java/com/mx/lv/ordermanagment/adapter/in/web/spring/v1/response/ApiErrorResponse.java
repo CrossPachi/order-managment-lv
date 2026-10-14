@@ -1,4 +1,4 @@
-package com.mx.lv.ordermanagment.adapter.in.web.spring.response.v1;
+package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response;
 
 import java.time.Instant;
 

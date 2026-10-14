@@ -4,11 +4,8 @@ info:
   version: 1.0.0
   description: |
     Search orders by order reference (`orderRef`), order status (`orderStatus`),
-    store name (`storeName`), or product name (`displayName`) from the order's
-    items. Matching is case- and accent-insensitive, ignores punctuation such
-    as commas, and allows minor spelling errors when searching store and
-    product names. An empty search or a search with no matches returns an
-    empty list.
+    store name (`storeName`), or an item's product name (`displayName`), or
+    retrieve one order by its reference.
   contact:
     name: Support team
 servers:
@@ -20,11 +17,17 @@ tags:
 paths:
   /api/v1/orders/search:
     $ref: ./paths/orders.yaml
+  /api/v1/orders/{orderRef}:
+    $ref: ./paths/order-by-reference.yaml
 components:
   schemas:
-    Order:
+    OrderSearchResponse:
       $ref: ./schemas/order.yaml
-    Item:
+    OrderSearchItem:
       $ref: ./schemas/item.yaml
+    OrderResponse:
+      $ref: ./schemas/order-detail.yaml
+    OrderItemResponse:
+      $ref: ./schemas/order-detail-item.yaml
     ApiError:
       $ref: ./schemas/api-error.yaml
