@@ -1,0 +1,50 @@
+[
+  {
+    "userId": "75c97531-abf5-4524-8107-90aa48d08efc",
+    "name": "Customer A",
+    "fathersLastName": "LastName A",
+    "mothersLastName": "MotherLastName A",
+    "email": "customera@mimail.com",
+    "address": "Monterrey Centro"
+  },
+  {
+    "userId": "aa2ae8bf-6b32-45dc-bb69-14e899bd8fed",
+    "name": "Customer B",
+    "fathersLastName": "LastName B",
+    "mothersLastName": "MotherLastName B",
+    "email": "customerb@mimail.com",
+    "address": "Monterrey Norte"
+  },
+  {
+    "userId": "b446eb39-84fc-46e2-923b-91771d806c38",
+    "name": "Customer C",
+    "fathersLastName": "LastName C",
+    "mothersLastName": "MotherLastName C",
+    "email": "customerc@mimail.com",
+    "address": "Monterrey Sur"
+  },
+  {
+    "userId": "93a5c099-3bbe-4718-8a0a-2e1bae0e08c8",
+    "name": "Customer D",
+    "fathersLastName": "LastName D",
+    "mothersLastName": "MotherLastName D",
+    "email": "customerd@mimail.com",
+    "address": "Monterrey Oriente"
+  },
+  {
+    "userId": "f6ec8262-7017-4532-a382-70c86e7844fc",
+    "name": "Customer E",
+    "fathersLastName": "LastName E",
+    "mothersLastName": "MotherLastName E",
+    "email": "customere@mimail.com",
+    "address": "Monterrey Poniente"
+  },
+  {
+    "userId": "12665a1b2c3d4e5f6a7b8c9d0e",
+    "name": "Customer F",
+    "fathersLastName": "LastName F",
+    "mothersLastName": "MotherLastName F",
+    "email": "customerf@mimail.com",
+    "address": "San Pedro Garza Garcia"
+  }
+]

@@ -1,8 +1,8 @@
 package com.mx.lv.ordermanagment.application.port.in;
 
-import com.mx.lv.ordermanagment.domain.model.Customer;
+import com.mx.lv.ordermanagment.domain.model.CustomWhitOrders;
 
 public interface GetCustomerByIdUseCase {
 
-    Customer getCustomerById(String userId);
+    CustomWhitOrders getCustomerById(String userId);
 }

@@ -5,7 +5,8 @@ info:
   description: |
     Search orders by order reference (`orderRef`), order status (`orderStatus`),
     store name (`storeName`), or an item's product name (`displayName`), or
-    retrieve one order by its reference.
+    retrieve one order by its reference. Manage customers by creating,
+    retrieving, updating, or deleting their records.
   contact:
     name: Support team
 servers:
@@ -14,11 +15,17 @@ servers:
 tags:
   - name: Orders
     description: Search orders and their items.
+  - name: Customers
+    description: Create and manage customer records.
 paths:
   /api/v1/orders/search:
     $ref: ./paths/orders.yaml
   /api/v1/orders/{orderRef}:
     $ref: ./paths/order-by-reference.yaml
+  /api/v1/customers:
+    $ref: ./paths/customers.yaml
+  /api/v1/customers/{customerId}:
+    $ref: ./paths/customer-by-id.yaml
 components:
   schemas:
     OrderSearchResponse:
@@ -29,5 +36,25 @@ components:
       $ref: ./schemas/order-detail.yaml
     OrderItemResponse:
       $ref: ./schemas/order-detail-item.yaml
+    CreateCustomerRequest:
+      $ref: ./schemas/create-customer-request.yaml
+    UpdateCustomerRequest:
+      $ref: ./schemas/update-customer-request.yaml
+    CustomerResponse:
+      $ref: ./schemas/customer-response.yaml
+    CustomerWithOrdersResponse:
+      $ref: ./schemas/customer-with-orders-response.yaml
     ApiError:
       $ref: ./schemas/api-error.yaml
+  parameters:
+    customerId:
+      name: customerId
+      in: path
+      required: true
+      description: Customer ID. It must contain 10 to 100 letters, digits, or hyphens.
+      schema:
+        type: string
+        minLength: 10
+        maxLength: 100
+        pattern: '^[a-zA-Z0-9-]{10,100}$'
+      example: customer-123

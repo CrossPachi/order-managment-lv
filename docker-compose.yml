@@ -1,0 +1,31 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 120s
+      timeout: 5s
+      retries: 2
+      start_period: 20s
+
+  order-management-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order-management-api
+    ports:
+      - "8080:8080"
+    environment:
+      - MOCK_API_BASE_URL=https://6994a4eab081bc23e9c0f61e.mockapi.io/api/v1
+      - MONGODB_URI=mongodb://mongo:27017/order_management_db
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
