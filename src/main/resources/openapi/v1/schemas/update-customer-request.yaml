@@ -1,0 +1,42 @@
+type: object
+description: Customer details to update. All fields are required.
+required:
+  - name
+  - fathersLastName
+  - mothersLastName
+  - email
+  - address
+properties:
+  name:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^[\p{L} ]+$'
+    description: Customer's first name, made up of letters and spaces.
+    example: Ana
+  fathersLastName:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^[\p{L} ]+$'
+    description: Customer's father's last name, made up of letters and spaces.
+    example: Pérez
+  mothersLastName:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^[\p{L} ]+$'
+    description: Customer's mother's last name, made up of letters and spaces.
+    example: Gómez
+  email:
+    type: string
+    format: email
+    maxLength: 50
+    description: Customer's email address.
+    example: ana@example.com
+  address:
+    type: string
+    minLength: 5
+    maxLength: 200
+    description: Customer's address.
+    example: Avenida Reforma 100

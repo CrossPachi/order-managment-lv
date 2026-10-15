@@ -1,0 +1,38 @@
+type: object
+description: Customer details and the references of their orders.
+required:
+  - userId
+  - name
+  - fathersLastName
+  - mothersLastName
+  - email
+  - address
+  - orders
+properties:
+  userId:
+    type: string
+    description: Customer ID.
+    example: customer-123
+  name:
+    type: string
+    example: Ana
+  fathersLastName:
+    type: string
+    example: Pérez
+  mothersLastName:
+    type: string
+    example: Gómez
+  email:
+    type: string
+    format: email
+    example: ana@example.com
+  address:
+    type: string
+    example: Avenida Reforma 100
+  orders:
+    type: array
+    description: References of orders associated with the customer.
+    items:
+      type: string
+    example:
+      - ORD-2026-1042

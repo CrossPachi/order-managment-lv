@@ -1,0 +1,30 @@
+type: object
+description: Customer details returned after creating or updating a customer.
+required:
+  - userId
+  - name
+  - fathersLastName
+  - mothersLastName
+  - email
+  - address
+properties:
+  userId:
+    type: string
+    description: Customer ID.
+    example: customer-123
+  name:
+    type: string
+    example: Ana
+  fathersLastName:
+    type: string
+    example: Pérez
+  mothersLastName:
+    type: string
+    example: Gómez
+  email:
+    type: string
+    format: email
+    example: ana@example.com
+  address:
+    type: string
+    example: Avenida Reforma 100

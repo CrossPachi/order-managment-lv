@@ -2,7 +2,7 @@ package com.mx.lv.ordermanagment.application.port.in;
 
 import com.mx.lv.ordermanagment.domain.model.Customer;
 
-public interface CreateCustomer {
+public interface UpdateCustomerUseCase {
 
-    Customer createCustomer(Customer customer);
+    Customer updateCustomer(Customer customer, String customerId);
 }
