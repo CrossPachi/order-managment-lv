@@ -2,11 +2,7 @@ openapi: 3.1.0
 info:
   title: Orders API
   version: 1.0.0
-  description: |
-    Search orders by order reference (`orderRef`), order status (`orderStatus`),
-    store name (`storeName`), or an item's product name (`displayName`), or
-    retrieve one order by its reference. Manage customers by creating,
-    retrieving, updating, or deleting their records.
+  description: API for looking up orders and managing customers.
   contact:
     name: Support team
 servers:

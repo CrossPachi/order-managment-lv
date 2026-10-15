@@ -1,5 +1,12 @@
 type: object
 description: Details required to create a customer. `userId` is optional; the service generates a UUID when it is blank or omitted.
+example:
+  userId: customer-123
+  name: Ana
+  fathersLastName: Pérez
+  mothersLastName: Gómez
+  email: ana@example.com
+  address: Avenida Reforma 100
 required:
   - name
   - fathersLastName

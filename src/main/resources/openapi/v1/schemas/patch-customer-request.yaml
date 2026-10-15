@@ -1,5 +1,7 @@
 type: object
 description: Customer fields to change. Every property is optional, but at least one must be provided.
+example:
+  email: ana.nueva@example.com
 properties:
   name:
     type: string

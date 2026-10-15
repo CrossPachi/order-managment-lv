@@ -1,11 +1,10 @@
 get:
   tags:
     - Orders
-  summary: Order Query Service
+  summary: Get an order by reference
   description: |
-    Retrieves a specific order by its reference, including its associated item
-    details. The response includes the order reference, channel, status, and
-    each item's identifier and quantity.
+    Retrieves one order using its reference. The response includes the order's
+    channel, current status, and each item's identifier and quantity.
 
     Example request:
 
@@ -13,7 +12,6 @@ get:
     curl 'http://localhost:8080/api/v1/orders/ORD-2026-1042'
     ```
 
-    Example response values are illustrative.
   operationId: getOrderByReference
   parameters:
     - name: orderRef
@@ -38,7 +36,7 @@ get:
               - itemId: ITEM-781
                 quantity: 1
     '404':
-      description: No order was found with the given reference.
+      description: No order exists with the supplied reference.
       content:
         application/json:
           schema:
@@ -60,4 +58,4 @@ get:
             message: Unable to load orders from external services
             timestamp: '2026-10-13T18:00:00Z'
     '500':
-      description: An unexpected problem occurred while retrieving the order.
+      description: An unexpected server-side problem occurred while retrieving the order.

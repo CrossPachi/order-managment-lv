@@ -1,5 +1,11 @@
 type: object
 description: Customer details to update. All fields are required.
+example:
+  name: Ana
+  fathersLastName: Pérez
+  mothersLastName: Gómez
+  email: ana@example.com
+  address: Avenida Reforma 100
 required:
   - name
   - fathersLastName
