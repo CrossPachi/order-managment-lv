@@ -1,9 +1,11 @@
 package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.mapper;
 
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.CreateCustomerRequest;
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.PatchCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.UpdateCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerResponse;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerWithOrdersResponse;
+import com.mx.lv.ordermanagment.application.model.PatchCustomerData;
 import com.mx.lv.ordermanagment.domain.model.CustomWhitOrders;
 import com.mx.lv.ordermanagment.domain.model.Customer;
 import com.mx.lv.ordermanagment.domain.model.Order;
@@ -34,6 +36,16 @@ class CustomerWebMapperTest {
         );
 
         assertEquals(customer("path-user-id"), mapper.mapUpdateRequestToDomain("path-user-id", request));
+    }
+
+    @Test
+    void mapsOnlyTheProvidedPatchFieldsWithoutFillingInMissingValues() {
+        PatchCustomerRequest request = new PatchCustomerRequest("Ana María", null, null, null, "New address");
+
+        assertEquals(
+                new PatchCustomerData("Ana María", null, null, null, "New address"),
+                mapper.mapPatchRequestToData(request)
+        );
     }
 
     @Test

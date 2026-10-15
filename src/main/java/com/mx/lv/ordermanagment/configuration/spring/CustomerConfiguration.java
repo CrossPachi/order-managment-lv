@@ -6,11 +6,13 @@ import com.mx.lv.ordermanagment.application.port.in.DeleteCustomerUseCase;
 import com.mx.lv.ordermanagment.application.port.in.GetAllCustomersUseCase;
 import com.mx.lv.ordermanagment.application.port.in.GetCustomerByIdUseCase;
 import com.mx.lv.ordermanagment.application.port.in.UpdateCustomerUseCase;
+import com.mx.lv.ordermanagment.application.port.in.PatchCustomerUseCase;
 import com.mx.lv.ordermanagment.application.usecase.CreateCustomerService;
 import com.mx.lv.ordermanagment.application.usecase.DeleteCustomerService;
 import com.mx.lv.ordermanagment.application.usecase.GetAllCustomersService;
 import com.mx.lv.ordermanagment.application.usecase.GetCustomerByIdService;
 import com.mx.lv.ordermanagment.application.usecase.UpdateCustomerService;
+import com.mx.lv.ordermanagment.application.usecase.PatchCustomerService;
 import tools.jackson.databind.ObjectMapper;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.mapper.CustomerWebMapper;
 import com.mx.lv.ordermanagment.adapter.out.persistence.mongo.CustomerMongoAdapter;
@@ -70,5 +72,10 @@ public class CustomerConfiguration {
     public CustomerDataInitializer customerDataInitializer(
             CustomerPersistencePort customerPersistencePort, ObjectMapper objectMapper) {
         return new CustomerDataInitializer(customerPersistencePort, objectMapper);
+    }
+
+    @Bean
+    public PatchCustomerUseCase patchCustomerUseCase(CustomerPersistencePort customerPersistencePort) {
+        return new PatchCustomerService(customerPersistencePort);
     }
 }

@@ -22,41 +22,41 @@ get:
             address: Avenida Reforma 100
             orders:
               - ORD-2026-1042
-  '400':
-    description: The customer ID does not match the required format.
-    content:
-      application/json:
-        schema:
-          $ref: ../openapi.yaml#/components/schemas/ApiError
-        example:
-          status: 400
-          error: Bad Request
-          message: 'getCustomerById.customerId: CustomerId invalid format'
-          timestamp: '2026-10-14T19:30:00Z'
-  '404':
-    description: No customer was found with the given ID.
-    content:
-      application/json:
-        schema:
-          $ref: ../openapi.yaml#/components/schemas/ApiError
-        example:
-          status: 404
-          error: Not Found
-          message: 'Customer not found: customer-123'
-          timestamp: '2026-10-14T19:30:00Z'
-  '502':
-    description: The order service could not be reached while loading the customer's orders.
-    content:
-      application/json:
-        schema:
-          $ref: ../openapi.yaml#/components/schemas/ApiError
-        example:
-          status: 502
-          error: Bad Gateway
-          message: Unable to load orders from external services
-          timestamp: '2026-10-14T19:30:00Z'
-  '500':
-    description: An unexpected problem occurred while retrieving the customer.
+    '400':
+      description: The customer ID does not match the required format.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 400
+            error: Bad Request
+            message: 'getCustomerById.customerId: CustomerId invalid format'
+            timestamp: '2026-10-14T19:30:00Z'
+    '404':
+      description: No customer was found with the given ID.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 404
+            error: Not Found
+            message: 'Customer not found: customer-123'
+            timestamp: '2026-10-14T19:30:00Z'
+    '502':
+      description: The order service could not be reached while loading the customer's orders.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 502
+            error: Bad Gateway
+            message: Unable to load orders from external services
+            timestamp: '2026-10-14T19:30:00Z'
+    '500':
+      description: An unexpected problem occurred while retrieving the customer.
 
 put:
   tags:
@@ -103,6 +103,96 @@ put:
             error: Bad Request
             message: 'name: Name is required'
             timestamp: '2026-10-14T19:30:00Z'
+    '404':
+      description: No customer was found with the given ID.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          example:
+            status: 404
+            error: Not Found
+            message: 'Customer not found: customer-123'
+            timestamp: '2026-10-14T19:30:00Z'
+    '500':
+      description: An unexpected problem occurred while updating the customer.
+
+patch:
+  tags:
+    - Customers
+  summary: Update selected customer details
+  description: |
+    Updates only the fields included in the request. Omitted or null fields
+    keep their current values. At least one field must be provided.
+
+    Example request:
+
+    ```bash
+    curl --request PATCH 'http://localhost:8080/api/v1/customers/customer-123' \
+      --header 'Content-Type: application/json' \
+      --data '{"email":"ana.nueva@example.com"}'
+    ```
+  operationId: patchCustomer
+  parameters:
+    - $ref: ../openapi.yaml#/components/parameters/customerId
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/PatchCustomerRequest
+        examples:
+          updateEmail:
+            summary: Change only the email address
+            value:
+              email: ana.nueva@example.com
+          updateNameAndAddress:
+            summary: Change more than one field
+            value:
+              name: Ana María
+              address: Avenida Reforma 200
+  responses:
+    '200':
+      description: Customer updated. Fields omitted from the request keep their existing values.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/CustomerResponse
+          example:
+            userId: customer-123
+            name: Ana
+            fathersLastName: Pérez
+            mothersLastName: Gómez
+            email: ana.nueva@example.com
+            address: Avenida Reforma 100
+    '400':
+      description: The customer ID or a provided field is invalid, or no fields were provided.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          examples:
+            invalidField:
+              summary: A field does not meet its validation rules
+              value:
+                status: 400
+                error: Bad Request
+                message: 'email: Email format is invalid'
+                timestamp: '2026-10-14T19:30:00Z'
+            emptyPatch:
+              summary: The patch has no fields to update
+              value:
+                status: 400
+                error: Bad Request
+                message: A field must be provided to update the customer
+                timestamp: '2026-10-14T19:30:00Z'
+            invalidCustomerId:
+              summary: Customer ID has an invalid format
+              value:
+                status: 400
+                error: Bad Request
+                message: 'patchCustomer.customerId: CustomerId invalid format'
+                timestamp: '2026-10-14T19:30:00Z'
     '404':
       description: No customer was found with the given ID.
       content:

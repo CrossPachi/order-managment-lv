@@ -40,6 +40,8 @@ components:
       $ref: ./schemas/create-customer-request.yaml
     UpdateCustomerRequest:
       $ref: ./schemas/update-customer-request.yaml
+    PatchCustomerRequest:
+      $ref: ./schemas/patch-customer-request.yaml
     CustomerResponse:
       $ref: ./schemas/customer-response.yaml
     CustomerWithOrdersResponse:

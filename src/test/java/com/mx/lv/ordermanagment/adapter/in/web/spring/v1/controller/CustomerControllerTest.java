@@ -2,15 +2,19 @@ package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.controller;
 
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.mapper.CustomerWebMapper;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.CreateCustomerRequest;
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.PatchCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.UpdateCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerResponse;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerWithOrdersResponse;
 import com.mx.lv.ordermanagment.application.exception.CustomerAlreadyExistsException;
 import com.mx.lv.ordermanagment.application.exception.CustomerNotFoundException;
+import com.mx.lv.ordermanagment.application.exception.EmptyCustomerPatchException;
+import com.mx.lv.ordermanagment.application.model.PatchCustomerData;
 import com.mx.lv.ordermanagment.application.port.in.CreateCustomerUseCase;
 import com.mx.lv.ordermanagment.application.port.in.DeleteCustomerUseCase;
 import com.mx.lv.ordermanagment.application.port.in.GetAllCustomersUseCase;
 import com.mx.lv.ordermanagment.application.port.in.GetCustomerByIdUseCase;
+import com.mx.lv.ordermanagment.application.port.in.PatchCustomerUseCase;
 import com.mx.lv.ordermanagment.application.port.in.UpdateCustomerUseCase;
 import com.mx.lv.ordermanagment.domain.model.CustomWhitOrders;
 import com.mx.lv.ordermanagment.domain.model.Customer;
@@ -43,6 +47,8 @@ class CustomerControllerTest {
     @Mock
     private GetAllCustomersUseCase getAllCustomersUseCase;
     @Mock
+    private PatchCustomerUseCase patchCustomerUseCase;
+    @Mock
     private UpdateCustomerUseCase updateCustomerUseCase;
     @Mock
     private DeleteCustomerUseCase deleteCustomerUseCase;
@@ -59,6 +65,7 @@ class CustomerControllerTest {
                 updateCustomerUseCase,
                 deleteCustomerUseCase,
                 getAllCustomersUseCase,
+                patchCustomerUseCase,
                 customerWebMapper
         );
     }
@@ -164,6 +171,60 @@ class CustomerControllerTest {
 
         assertSame(expected, actual);
         verify(customerWebMapper, never()).mapDomainListToResponse(org.mockito.ArgumentMatchers.any());
+    }
+
+    @Test
+    void appliesAPatchAndReturnsTheUpdatedCustomer() {
+        PatchCustomerRequest request = new PatchCustomerRequest(
+                "Alexandra", null, null, null, null
+        );
+        PatchCustomerData patchData = new PatchCustomerData("Alexandra", null, null, null, null);
+        Customer patchedCustomer = new Customer(
+                CUSTOMER_ID, "Alexandra", "Lopez", "Diaz", "alex@example.com", "Main Street 10"
+        );
+        CustomerResponse responseBody = response(CUSTOMER_ID);
+        when(customerWebMapper.mapPatchRequestToData(request)).thenReturn(patchData);
+        when(patchCustomerUseCase.patchCustomer(CUSTOMER_ID, patchData)).thenReturn(patchedCustomer);
+        when(customerWebMapper.mapDomainToResponse(patchedCustomer)).thenReturn(responseBody);
+
+        ResponseEntity<CustomerResponse> response = controller.patchCustomer(CUSTOMER_ID, request);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertSame(responseBody, response.getBody());
+        verify(patchCustomerUseCase).patchCustomer(CUSTOMER_ID, patchData);
+    }
+
+    @Test
+    void passesPatchFailuresBackToTheExceptionHandler() {
+        PatchCustomerRequest request = new PatchCustomerRequest("Alexandra", null, null, null, null);
+        PatchCustomerData patchData = new PatchCustomerData("Alexandra", null, null, null, null);
+        CustomerNotFoundException expected = new CustomerNotFoundException(CUSTOMER_ID);
+        when(customerWebMapper.mapPatchRequestToData(request)).thenReturn(patchData);
+        when(patchCustomerUseCase.patchCustomer(CUSTOMER_ID, patchData)).thenThrow(expected);
+
+        CustomerNotFoundException actual = assertThrows(
+                CustomerNotFoundException.class,
+                () -> controller.patchCustomer(CUSTOMER_ID, request)
+        );
+
+        assertSame(expected, actual);
+        verify(customerWebMapper, never()).mapDomainToResponse(org.mockito.ArgumentMatchers.any(Customer.class));
+    }
+
+    @Test
+    void passesAnEmptyPatchBackAsAClientError() {
+        PatchCustomerRequest request = new PatchCustomerRequest(null, null, null, null, null);
+        PatchCustomerData patchData = new PatchCustomerData(null, null, null, null, null);
+        EmptyCustomerPatchException expected = new EmptyCustomerPatchException();
+        when(customerWebMapper.mapPatchRequestToData(request)).thenReturn(patchData);
+        when(patchCustomerUseCase.patchCustomer(CUSTOMER_ID, patchData)).thenThrow(expected);
+
+        EmptyCustomerPatchException actual = assertThrows(
+                EmptyCustomerPatchException.class,
+                () -> controller.patchCustomer(CUSTOMER_ID, request)
+        );
+
+        assertSame(expected, actual);
     }
 
     @Test

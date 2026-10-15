@@ -1,0 +1,38 @@
+type: object
+description: Customer fields to change. Every property is optional, but at least one must be provided.
+properties:
+  name:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^(?=.*\p{L})[\p{L} ]+$'
+    description: New customer name. Use letters and spaces.
+    example: Ana María
+  fathersLastName:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^(?=.*\p{L})[\p{L} ]+$'
+    description: New father's last name. Use letters and spaces.
+    example: Pérez
+  mothersLastName:
+    type: string
+    minLength: 2
+    maxLength: 50
+    pattern: '^(?=.*\p{L})[\p{L} ]+$'
+    description: New mother's last name. Use letters and spaces.
+    example: Gómez
+  email:
+    type: string
+    format: email
+    maxLength: 100
+    pattern: '^(?!\s*$).+'
+    description: New email address. It cannot be blank.
+    example: ana.nueva@example.com
+  address:
+    type: string
+    minLength: 5
+    maxLength: 200
+    pattern: '.*\S.*'
+    description: New address. It cannot be blank.
+    example: Avenida Reforma 200
