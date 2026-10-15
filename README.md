@@ -32,6 +32,12 @@ The application is currently deployed to **Azure Container Apps**.
 https://ca-order-management-wp-dev.ashywater-483770a9.eastus2.azurecontainerapps.io/api/v1/customers
 ```
 
+### Orders API
+
+```text
+https://ca-order-management-wp-dev.ashywater-483770a9.eastus2.azurecontainerapps.io/api/v1/orders
+```
+
 ### Swagger UI
 
 ```text
