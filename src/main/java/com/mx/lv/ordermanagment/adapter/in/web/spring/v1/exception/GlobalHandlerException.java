@@ -4,6 +4,7 @@ package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.exception;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.ApiErrorResponse;
 import com.mx.lv.ordermanagment.application.exception.CustomerAlreadyExistsException;
 import com.mx.lv.ordermanagment.application.exception.CustomerNotFoundException;
+import com.mx.lv.ordermanagment.application.exception.EmptyCustomerPatchException;
 import com.mx.lv.ordermanagment.application.exception.OrderNotFoundException;
 import com.mx.lv.ordermanagment.application.exception.OrdersUnavailableException;
 import jakarta.validation.ConstraintViolationException;
@@ -63,6 +64,12 @@ public class GlobalHandlerException {
 
         return buildApiErrorResponse(HttpStatus.BAD_REQUEST, message);
     }
+
+    @ExceptionHandler(EmptyCustomerPatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleEmptyCustomerPatch(EmptyCustomerPatchException exception) {
+        return buildApiErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     private ResponseEntity<ApiErrorResponse> buildApiErrorResponse(HttpStatus status, String message) {
         ApiErrorResponse response = new ApiErrorResponse(
                 status.value(),

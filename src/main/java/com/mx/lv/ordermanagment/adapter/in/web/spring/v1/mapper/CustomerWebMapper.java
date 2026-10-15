@@ -1,9 +1,11 @@
 package com.mx.lv.ordermanagment.adapter.in.web.spring.v1.mapper;
 
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.CreateCustomerRequest;
+import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.PatchCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.request.UpdateCustomerRequest;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerResponse;
 import com.mx.lv.ordermanagment.adapter.in.web.spring.v1.response.CustomerWithOrdersResponse;
+import com.mx.lv.ordermanagment.application.model.PatchCustomerData;
 import com.mx.lv.ordermanagment.domain.model.CustomWhitOrders;
 import com.mx.lv.ordermanagment.domain.model.Customer;
 import com.mx.lv.ordermanagment.domain.model.Order;
@@ -67,5 +69,15 @@ public class CustomerWebMapper {
         return customersWithOrders.stream()
                 .map(customerWithOrders -> mapDomainToResponse(customerWithOrders))
                 .toList();
+    }
+
+    public PatchCustomerData mapPatchRequestToData(PatchCustomerRequest request) {
+        return new PatchCustomerData(
+                request.name(),
+                request.fathersLastName(),
+                request.mothersLastName(),
+                request.email(),
+                request.address()
+        );
     }
 }

@@ -99,6 +99,23 @@ class CustomerRequestValidationTest {
                 "Avenida Reforma"), "email");
     }
 
+    @Test
+    void acceptsPatchRequestsWithOnlyOneFieldProvided() {
+        PatchCustomerRequest request = new PatchCustomerRequest("Ana María", null, null, null, null);
+
+        assertTrue(validator.validate(request).isEmpty());
+    }
+
+    @Test
+    void acceptsMissingPatchFieldsButRejectsInvalidValuesThatAreProvided() {
+        assertTrue(validator.validate(new PatchCustomerRequest(null, null, null, null, null)).isEmpty());
+        assertInvalidFields(new PatchCustomerRequest(" ", null, null, null, null), "name");
+        assertInvalidFields(new PatchCustomerRequest(null, null, null, " ", null), "email");
+        assertInvalidFields(new PatchCustomerRequest(null, null, null, null, "   "), "address");
+        assertInvalidFields(new PatchCustomerRequest(null, "A", null, null, null), "fathersLastName");
+        assertInvalidFields(new PatchCustomerRequest(null, null, "Gomez2", null, null), "mothersLastName");
+    }
+
     private void assertInvalidFields(Object request, String... expectedFields) {
         Set<String> invalidFields = validator.validate(request).stream()
                 .map(violation -> violation.getPropertyPath().toString())
