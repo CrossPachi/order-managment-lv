@@ -2,7 +2,7 @@ get:
   tags:
     - Customers
   summary: Get all customers
-  description: Returns all customers along with the references of their orders.
+  description: Returns every registered customer with the references of their orders. An empty list is returned when there are no customers.
   operationId: getAllCustomers
   responses:
     '200':
@@ -40,15 +40,17 @@ get:
             message: Unable to load orders from external services
             timestamp: '2026-10-14T20:30:00Z'
     '500':
-      description: An unexpected problem occurred while retrieving customers.
+      description: An unexpected server-side problem occurred while retrieving customers.
 
 post:
   tags:
     - Customers
   summary: Create a customer
   description: |
-    Creates a customer record. You may provide a `userId` up to 50 characters.
-    If it is omitted, null, or blank, the service generates a UUID.
+    Adds a customer record and returns the saved details. `userId` is optional
+    and can contain up to 50 characters. If it is omitted or blank, the service
+    generates an ID. The email address must be valid and the name fields must
+    contain letters and spaces.
 
     Example request:
 
@@ -71,13 +73,16 @@ post:
       application/json:
         schema:
           $ref: ../openapi.yaml#/components/schemas/CreateCustomerRequest
-        example:
-          userId: customer-123
-          name: Ana
-          fathersLastName: Pérez
-          mothersLastName: Gómez
-          email: ana@example.com
-          address: Avenida Reforma 100
+        examples:
+          newCustomer:
+            summary: Create Ana Pérez Gómez
+            value:
+              userId: customer-123
+              name: Ana
+              fathersLastName: Pérez
+              mothersLastName: Gómez
+              email: ana@example.com
+              address: Avenida Reforma 100
   responses:
     '201':
       description: Customer created.
@@ -115,4 +120,4 @@ post:
             message: 'Customer: customer-123 already exists.'
             timestamp: '2026-10-14T19:30:00Z'
     '500':
-      description: An unexpected problem occurred while creating the customer.
+      description: An unexpected server-side problem occurred while creating the customer.

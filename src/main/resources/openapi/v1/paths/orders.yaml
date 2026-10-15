@@ -1,10 +1,9 @@
 get:
   tags:
     - Orders
-  summary: Order Search Service
+  summary: Search orders
   description: |
-    Searches orders by reference, status, store name, or item name using
-    flexible text matching.
+    Finds orders by order reference, status, store name, or product name.
 
     Enter a word or phrase in `text`. Matching ignores letter case, accents,
     and punctuation such as commas. Store and product names also allow a minor
@@ -20,7 +19,6 @@ get:
       --data-urlencode 'text=audifonos inalambricos'
     ```
 
-    Example response values are illustrative.
   operationId: searchOrders
   parameters:
     - name: text
@@ -55,9 +53,9 @@ get:
               summary: No matching orders
               value: []
     '400':
-      description: Bad request. The required `text` query parameter is missing.
+      description: The required `text` query parameter was not provided. An empty or blank value returns a successful response with no matches.
     '502':
-      description: Bad gateway. The order or item service could not be reached, or returned an empty response.
+      description: The order or item service could not be reached, or returned an empty response.
       content:
         application/json:
           schema:
@@ -68,4 +66,4 @@ get:
             message: Unable to load orders from external services
             timestamp: '2026-10-12T22:30:00Z'
     '500':
-      description: Internal server error. An unexpected problem occurred while searching orders.
+      description: An unexpected server-side problem occurred while searching orders.
